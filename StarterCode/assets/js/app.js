@@ -28,14 +28,14 @@ var chartGroup = svg.append("g")
 
 
 // Initial Params
-var chosenXAxis = "healthcareLow";
+var chosenXAxis = "poverty";
 
 // function used for updating x-scale var upon click on axis label
-function xScale(healthcare, chosenXAxis) {
+function xScale(pov, chosenXAxis) {
     // create scales
     var xLinearScale = d3.scaleLinear()
-        .domain([d3.min(healthcare, d => d[chosenXAxis]) * 0.8,
-        d3.max(healthcare, d => d[chosenXAxis]) * 1.2
+        .domain([d3.min(pov, d => d[chosenXAxis]) * 0.8,
+        d3.max(pov, d => d[chosenXAxis]) * 1.2
         ])
         .range([0, width]);
 
@@ -112,7 +112,7 @@ d3.csv("assets/data/data.csv").then(function (CensusData) {
 
     // Create y scale function
     var yLinearScale = d3.scaleLinear()
-        .domain([6, d3.max(CensusData, d => d.poverty)])
+        .domain([2, d3.max(CensusData, d => d.healthcareLow)])
         .range([height, 0]);
 
     // Create initial axis functions
@@ -136,9 +136,18 @@ d3.csv("assets/data/data.csv").then(function (CensusData) {
         .enter()
         .append("circle")
         .attr("cx", d => xLinearScale(d[chosenXAxis]))
-        .attr("cy", d => yLinearScale(d.poverty))
+        .attr("cy", d => yLinearScale(d.healthcareLow))
         .attr("r", 10)
-        .attr("fill", "blue");
+        .attr("fill", "lightblue");
+
+    // append y axis
+    chartGroup.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left)
+        .attr("x", 0 - (height / 2))
+        .attr("dy", "1em")
+        .attr("class","axisText")
+        .text("Low Healthcare (%)");
 
 
 }).catch(function (error) {
