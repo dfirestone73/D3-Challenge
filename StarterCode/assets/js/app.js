@@ -1,13 +1,13 @@
 // Define SVG area dimensions
-var svgWidth = 960;
-var svgHeight = 660;
+var svgWidth = 750;
+var svgHeight = 500;
 
 // Define the chart's margins as an object
 var chartMargin = {
-    top: 30,
-    right: 30,
-    bottom: 30,
-    left: 30
+    top: 20,
+    right: 40,
+    bottom: 60,
+    left: 100
 };
 
 // Define dimensions of the chart area
@@ -112,7 +112,7 @@ d3.csv("assets/data/data.csv").then(function (CensusData) {
 
     // Create y scale function
     var yLinearScale = d3.scaleLinear()
-        .domain([2, d3.max(CensusData, d => d.healthcareLow)])
+        .domain([2, d3.max(CensusData, d => d.healthcareLow)+4])
         .range([height, 0]);
 
     // Create initial axis functions
@@ -143,11 +143,30 @@ d3.csv("assets/data/data.csv").then(function (CensusData) {
     // append y axis
     chartGroup.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", 0 - margin.left)
+        .attr("y", 0 - margin.left + 40)
         .attr("x", 0 - (height / 2))
         .attr("dy", "1em")
-        .attr("class","axisText")
+        .attr("class", "axisText")
+        .style("text-anchor", "middle")
         .text("Low Healthcare (%)");
+
+    chartGroup.append("text")
+        .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
+        .attr("class", "axisText")
+        .style("text-anchor", "middle")
+        .text("Poverty (%)");
+
+    // var labels = chartGroup.selectAll(null)
+    //     .data(CensusData)
+    //     .enter().
+    //     append("text");
+
+    // labels
+    //     .text(CensusData, d => d.abbr);
+    // // .attr("font-family", "sans-serif")
+    // .attr("font-size", "10px")
+    //     .attr("text-anchor", "middle")
+    //     .attr("fill", "white");
 
 
 }).catch(function (error) {
