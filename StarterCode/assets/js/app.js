@@ -143,7 +143,7 @@ d3.csv("assets/data/data.csv").then(function (CensusData) {
     // append y axis
     chartGroup.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", 0 - margin.left + 40)
+        .attr("y", 0 - chartMargin.left + 40)
         .attr("x", 0 - (height / 2))
         .attr("dy", "1em")
         .attr("class", "axisText")
@@ -151,7 +151,7 @@ d3.csv("assets/data/data.csv").then(function (CensusData) {
         .text("Low Healthcare (%)");
 
     chartGroup.append("text")
-        .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
+        .attr("transform", `translate(${width / 2}, ${height + chartMargin.top + 30})`)
         .attr("class", "axisText")
         .style("text-anchor", "middle")
         .text("Poverty (%)");
