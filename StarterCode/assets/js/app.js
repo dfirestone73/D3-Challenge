@@ -112,7 +112,7 @@ d3.csv("assets/data/data.csv").then(function (CensusData) {
 
     // Create y scale function
     var yLinearScale = d3.scaleLinear()
-        .domain([2, d3.max(CensusData, d => d.healthcareLow)+4])
+        .domain([2, d3.max(CensusData, d => d.healthcareLow) + 4])
         .range([height, 0]);
 
     // Create initial axis functions
@@ -134,11 +134,19 @@ d3.csv("assets/data/data.csv").then(function (CensusData) {
     var circlesGroup = chartGroup.selectAll("circle")
         .data(CensusData)
         .enter()
+
+    circlesGroup
         .append("circle")
         .attr("cx", d => xLinearScale(d[chosenXAxis]))
         .attr("cy", d => yLinearScale(d.healthcareLow))
         .attr("r", 10)
         .attr("fill", "lightblue");
+
+    circlesGroup
+        .append("text")
+        .attr("dx", d => xLinearScale(d[chosenXAxis]))
+        .attr("dy", d => yLinearScale(d.healthcareLow))
+        .text(d => d.abbr)
 
     // append y axis
     chartGroup.append("text")
@@ -154,7 +162,7 @@ d3.csv("assets/data/data.csv").then(function (CensusData) {
         .attr("transform", `translate(${width / 2}, ${height + chartMargin.top + 30})`)
         .attr("class", "axisText")
         .style("text-anchor", "middle")
-        .text("Poverty (%)");
+        .text("In Poverty (%)");
 
     // var labels = chartGroup.selectAll(null)
     //     .data(CensusData)
